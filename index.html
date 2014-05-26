@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <title>pirate-ninja-zombie-soldier</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1, IE=9">
+
+  <!-- build:css main.min.css -->
+  <link rel="stylesheet" href="css/main.css">
+  <!-- /build -->
+</head>
+<body oncontextmenu="return false">
+  <div id="game" style="width: 800px;margin:40px auto; border:2px solid #333"></div>
+  <div>
+    <form class="JSvars" style="margin: auto;width: 500px;">
+    <b>all in pixels/second </b><br />
+    <label>var MAX_SPEED = </label> <input class="JSmax_speed" />; <br />
+    <label>var MAX_SPEED_Y = </label> <input  class="JSmax_speed_y" />;<br />
+  <label>var YSPEED = </label> <input  class="JSyspeed" />;<br />
+  <label>var MOVE_ACCELERATION = </label> <input disabled="disabled" class="JSmove_acceleration" />; MAX_SPEED*5<br />
+  <label>var GRAVITY = </label> <input  class="JSgravity" />; <br />
+  
+  
+
+  <input type="submit" />
+    </form>
+  </div>
+  <p>Use W A S D to move. Use your mouse to aim and shoot</p>
+  <p>Developed by <a href="http://twitter.com/eugenioclrc">@eugenioclrc</a><p>
+
+  
+  <!-- <script src="http://192.168.0.201:8000/socket.io/socket.io.js"></script> -->
+    
+  <!-- <script src="js/lib/phaser.min.js"></script>-->
+  <script src="js/lib/phaser.js"></script>
+  <script src="js/states/Boot.js"></script>
+  <script src="js/states/Preloader.js"></script>
+  <script src="js/states/Arena.js"></script>
+  <script src="js/main.js"></script>
+
+  <script src="http://zeptojs.com/zepto.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    $('.JSmax_speed').attr('value', MAX_SPEED);
+    $('.JSmax_speed_y').attr('value', MAX_SPEED_Y);
+    $('.JSyspeed').attr('value', YSPEED);
+    $('.JSmove_acceleration').attr('value', MOVE_ACCELERATION);
+    $('.JSgravity').attr('value', GRAVITY);
+    
+
+    $('.JSvars').on('submit', function(e){
+      e.preventDefault();
+      MAX_SPEED = parseInt($('.JSmax_speed').val(), 10);
+      MAX_SPEED_Y=parseInt($('.JSmax_speed_y').val(), 10);
+      YSPEED=parseInt($('.JSyspeed').val(), 10);
+
+      MOVE_ACCELERATION=MAX_SPEED*5;
+      GRAVITY=parseInt($('.JSgravity').val(), 10);
+    
+      PLAYER.sprite.body.maxVelocity.setTo(MAX_SPEED, MAX_SPEED_Y); // x, y
+      PLAYER.sprite.body.gravity.set(0, GRAVITY);
+    });
+
+
+  });
+  </script>
+
+</body>
+</html>

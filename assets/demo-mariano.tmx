@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="134" height="19" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Kenney 32x32" tilewidth="32" tileheight="32">
+  <image source="images/tiles_spritesheet.png" width="384" height="320"/>
+ </tileset>
+ <tileset firstgid="121" name="collision" tilewidth="32" tileheight="32">
+  <image source="images/collision.png" width="32" height="32"/>
+ </tileset>
+ <layer name="Background1" width="134" height="19">
+  <data encoding="base64" compression="zlib">
+   eJzt1LEJwDAQBEG5J/Vfm3KzIBTJ4Bm4/IPlxwAAAODtORj/sWth3juNi/wLii4ouqDogqILii4oWqDogqILii7gWxZCzACq
+  </data>
+ </layer>
+ <layer name="Capa de Patrones 1" width="134" height="19">
+  <data encoding="base64" compression="zlib">
+   eJztl0ELwjAMRqN48qggiFNPYxc96P//cVbwEOIa09Zq1n0P3qWjbINH1hEBAAAAAAAAAEhhKQS/oQseX57//CxjaC10ET2+B0hnpVzzOi/m3CGfJZZ5ss68j9YFx1MXLeOldXThh0Vk/Zvnjdg9JJYutoQuarMP9syUPQexfgpe6f2bk9KVpYsN5XeRci6d2zn2LtwxS7kU7p/iubMVbkLeBZ8dch5YKO1CAy3UResiNjue3w5LJ7W7kLOuBb2Q04WV2l3IZ29BL1i76BUHGv/HQBfT7WIQxrr4pNYNnJ4PBbZAXw==
+  </data>
+ </layer>
+ <layer name="collision" width="134" height="19" opacity="0.47">
+  <data encoding="base64" compression="zlib">
+   eJzt190OwBAMhmG37e4Xp2LSNhufep/E0diKzk8pAAAAAACP2hWsoT7us5j62JX7AT/P3KtQjWsF738YHR9ru9vGfxeVXCcv9O1YH8kLDZG5f6tfB88j7/6y3qidNa7bz7FKfT7x3JnVKXc8tXiys+SEQp7s/v5tTlgrGsWYMpvtI0p7DHnxr2geUHKXB8FpdqQ=
+  </data>
+ </layer>
+</map>
