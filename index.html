@@ -1,79 +1,69 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+<head>
+  <title>pirate-ninja-zombie-soldier</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1, IE=9">
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Super-mean-boy : Super Mean Boy" />
+  <!-- build:css main.min.css -->
+  <link rel="stylesheet" href="css/main.css">
+  <!-- /build -->
+</head>
+<body oncontextmenu="return false">
+  <div id="game" style="width: 800px;margin:40px auto; border:2px solid #333"></div>
+  <div>
+    <form class="JSvars" style="margin: auto;width: 500px;">
+    <b>all in pixels/second </b><br />
+    <label>var MAX_SPEED = </label> <input class="JSmax_speed" />; <br />
+    <label>var MAX_SPEED_Y = </label> <input  class="JSmax_speed_y" />;<br />
+  <label>var YSPEED = </label> <input  class="JSyspeed" />;<br />
+  <label>var MOVE_ACCELERATION = </label> <input disabled="disabled" class="JSmove_acceleration" />; MAX_SPEED*5<br />
+  <label>var GRAVITY = </label> <input  class="JSgravity" />; <br />
+  
+  
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+  <input type="submit" />
+    </form>
+  </div>
+  <p>Use W A S D to move. Use your mouse to aim and shoot</p>
+  <p>Developed by <a href="http://twitter.com/eugenioclrc">@eugenioclrc</a><p>
 
-    <title>Super-mean-boy</title>
-  </head>
+  
+  <!-- <script src="http://192.168.0.201:8000/socket.io/socket.io.js"></script> -->
+    
+  <!-- <script src="js/lib/phaser.min.js"></script>-->
+  <script src="js/lib/phaser.js"></script>
+  <script src="js/states/Boot.js"></script>
+  <script src="js/states/Preloader.js"></script>
+  <script src="js/states/Arena.js"></script>
+  <script src="js/main.js"></script>
 
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/eugenioclrc/super-mean-boy">View on GitHub</a>
-
-          <h1 id="project_title">Super-mean-boy</h1>
-          <h2 id="project_tagline">Super Mean Boy</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/eugenioclrc/super-mean-boy/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/eugenioclrc/super-mean-boy/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Super-mean-boy maintained by <a href="https://github.com/eugenioclrc">eugenioclrc</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
+  <script src="http://zeptojs.com/zepto.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    $('.JSmax_speed').attr('value', MAX_SPEED);
+    $('.JSmax_speed_y').attr('value', MAX_SPEED_Y);
+    $('.JSyspeed').attr('value', YSPEED);
+    $('.JSmove_acceleration').attr('value', MOVE_ACCELERATION);
+    $('.JSgravity').attr('value', GRAVITY);
     
 
-  </body>
+    $('.JSvars').on('submit', function(e){
+      e.preventDefault();
+      MAX_SPEED = parseInt($('.JSmax_speed').val(), 10);
+      MAX_SPEED_Y=parseInt($('.JSmax_speed_y').val(), 10);
+      YSPEED=parseInt($('.JSyspeed').val(), 10);
+
+      MOVE_ACCELERATION=MAX_SPEED*5;
+      GRAVITY=parseInt($('.JSgravity').val(), 10);
+    
+      PLAYER.sprite.body.maxVelocity.setTo(MAX_SPEED, MAX_SPEED_Y); // x, y
+      PLAYER.sprite.body.gravity.set(0, GRAVITY);
+    });
+
+
+  });
+  </script>
+
+</body>
 </html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="25" height="22" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Kenney 32x32" tilewidth="32" tileheight="32">
+  <image source="images/tiles_spritesheet.png" width="384" height="320"/>
+ </tileset>
+ <tileset firstgid="121" name="collision" tilewidth="32" tileheight="32">
+  <image source="images/zelda.png" width="256" height="96"/>
+ </tileset>
+ <layer name="Capa de Patrones 1" width="25" height="22">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFwwFEAXE0Eo4dWOcMG+AJxfY45NHDnZSwh5ktBsW0AGJoeNSOwWGHFRTjAipArIoHq+PRa4WGaQFA5iL7Q5nK5itisUOJivaAzFdAMpva9iCbj56uYGIge1ShdmkBsSZUrzaaWVpIbA2o2apQ85HNw2YHDMPsIhYrEDAPlxglGNk8ABqqFhw=
+  </data>
+ </layer>
+ <layer name="collision" width="25" height="22" visible="0" opacity="0.46">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFwwFUYcGjgHJAKDyxhTuxYU+P+Bq1Y2jagStdkaOXFgDdjg4qm9+FxQ5q2oPLfGrZQ8h8SuwixeyhigGEEkOr
+  </data>
+ </layer>
+</map>
