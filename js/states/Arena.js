@@ -6,7 +6,8 @@ var MAX_SPEED = 400/BULLET_SPEED_TIME; // pixels/second
 var MAX_SPEED_Y = 750/BULLET_SPEED_TIME; // pixels/second
 var YSPEED = 750/BULLET_SPEED_TIME;
 var MOVE_ACCELERATION = MAX_SPEED*5/BULLET_SPEED_TIME; // pixels/second/second
-var GRAVITY = 1500/BULLET_SPEED_TIME;
+var GRAVITY = 1500/BULLET_SPEED_TIME; 
+var JUMP_BACK_OFF = 400;
 
 
 // Define constants
@@ -17,13 +18,74 @@ var NUMBER_OF_BULLETS = 200;
 var PLAYER;
 
 
+function halfRectangleTop(i, body, tile){
+    // check intersection
+    /*var intersects = (body.bottom.right <= tile.worldX);
+    intersects = intersects || (body.bottom <= tile.worldY + (tile.height / 2));
+    intersects = intersects || (body.position.x >= tile.worldX + tile.width);
+    intersects = intersects || (body.position.y >= tile.worldY + (tile.height / 2)); */
+    var intersects = (body.bottom.right <= tile.worldX);
+    intersects = intersects || (body.bottom <= tile.worldY + (tile.height / 2));
+    intersects = intersects || (body.position.x >= tile.worldX + tile.width);
+    intersects = intersects || (body.position.y >= tile.worldY);
+    console.log(intersects);
+    if (!intersects) {
+    	return intersects;
+    }
+
+
+    this.tileCheckX(body, tile);
+    /*
+    var ox=0;
+    if (!body.blocked.right && body.deltaAbsX() > 0) {
+		ox = body.right - tile.left;
+    } else if (!body.blocked.left && body.deltaAbsX() < 0) {
+		ox = body.x - tile.right;
+    }
+
+    if (this.TILE_BIAS < Math.abs(ox)) {
+    	ox=0;
+    }
+	
+	if(ox !== 0){
+		this.processTileSeparationX(body, ox);
+	}
+*/
+	var oy = 0;
+	
+	if (body.deltaY() < 0 && !body.blocked.up) {
+		//  Body is moving UP
+        if (tile.faceBottom && body.y < tile.bottom) {
+			oy = body.y - tile.bottom + (tile.height / 2);
+
+            if (oy < -this.TILE_BIAS) {
+            	oy = 0;
+			}
+		}
+	} else if (body.deltaY() > 0 && !body.blocked.down && tile.collideUp && body.checkCollision.down) {
+		//  Body is moving DOWN
+
+		if (tile.faceTop && body.bottom > tile.top) {
+			oy = body.bottom - tile.top;
+
+            if (oy > this.TILE_BIAS) {
+            	oy = 0;
+			}
+        }
+    }
+
+    if (oy !== 0) {
+		this.processTileSeparationY(body, oy);
+	}
+
+}
+
 function halfTriangleBottomLeft(i, body, tile){
-	body.blocked.down = false;
-	if( body.velocity.y >0 && (body.position.y+body.height-tile.bottom)+(body.position.x-tile.right)<=0){
+	if (body.velocity.y >0 && (body.position.y + body.height - tile.bottom) + (body.position.x - tile.right) <= 0){
 		body.y=(body.position.x-tile.right)-(body.height-tile.bottom);
 		body.blocked.down = true;
 		body.speedxPunish=MAX_SPEED*Math.cos(45);
-		if(body.velocity.x>0){
+		if (body.velocity.x > 0) {
 			body.speedxPunish = body.speedxPunish / 10;
 		}
 		
@@ -34,7 +96,6 @@ function halfTriangleBottomLeft(i, body, tile){
 
 
 function halfTriangleBottomRight(i, body, tile){
-	body.blocked.down = false;
 	if( body.velocity.y > 0 && (body.position.y+body.height-tile.top)-(body.position.x+body.width-tile.right)>=0){
 		body.y=tile.bottom+tile.left-(body.position.x+body.width)-body.height;
 		body.blocked.down = true;
@@ -80,6 +141,8 @@ var separateTile = function (i, body, tile, slope) {
 		return halfTriangleBottomLeft.call(this, i, body, tile);
 	}else if(type===17){
 		return halfTriangleBottomRight.call(this, i, body, tile);
+	}else if(type===6){
+		return halfRectangleTop.call(this, i, body, tile);
 	}
 
 
@@ -93,7 +156,7 @@ var separateTile = function (i, body, tile, slope) {
 			return false;
 		}
 
-		debugger;
+        debugger;
 
 		//  We don't need to go any further if this tile doesn't actually separate
 		if (!tile.faceLeft && !tile.faceRight && !tile.faceTop && !tile.faceBottom)
@@ -151,22 +214,22 @@ var separateTile = function (i, body, tile, slope) {
 			{
 				oy = this.tileCheckY(body, tile);
 
-				//  That's vertical done, check if we still intersects? If not then we can return now
-				if (oy !== 0 && !tile.intersects(body.position.x, body.position.y, body.right, body.bottom))
-				{
-					return true;
-				}
-			}
+                //  That's vertical done, check if we still intersects? If not then we can return now
+                if (oy !== 0 && !tile.intersects(body.position.x, body.position.y, body.right, body.bottom))
+                {
+                    return true;
+                }
+            }
 
-			if (tile.faceLeft || tile.faceRight)
-			{
-				ox = this.tileCheckX(body, tile);
-			}
-		}
+            if (tile.faceLeft || tile.faceRight)
+            {
+                ox = this.tileCheckX(body, tile);
+            }
+        }
 
-		return (ox !== 0 || oy !== 0);
+        return (ox !== 0 || oy !== 0);
 */
-	};
+    };
 
 (function(){
 	GameCtrl.Arena = function () {
@@ -199,7 +262,7 @@ var separateTile = function (i, body, tile, slope) {
 		var letters = '0123456789ABCDEF'.split('');
 		var color = '';
 		for (var i = 0; i < 6; i += 1 ) {
-			color += letters[Math.floor(Math.random() * 16)];
+		    color += letters[Math.floor(Math.random() * 16)];
 		}
 		return color;
 	}
@@ -216,29 +279,29 @@ var separateTile = function (i, body, tile, slope) {
 		},
 		createBullets:function(){
 			// Create an object pool of bullets
-			this.bulletPool = this.game.add.group();
-			var bitBullet=this.add.bitmapData(8,8);
-			bitBullet.ctx.beginPath();
-			bitBullet.ctx.rect(0,0,8,8);
-			//bitBullet.ctx.fillStyle = this.player._color;
-			bitBullet.ctx.fillStyle = '#ffffff';
-			bitBullet.ctx.fill();
+		    this.bulletPool = this.game.add.group();
+		    var bitBullet=this.add.bitmapData(8,8);
+		    bitBullet.ctx.beginPath();
+		    bitBullet.ctx.rect(0,0,8,8);
+		    //bitBullet.ctx.fillStyle = this.player._color;
+		    bitBullet.ctx.fillStyle = '#ffffff';	
+		    bitBullet.ctx.fill();
 
-			for(var i = 0; i < NUMBER_OF_BULLETS; i += 1) {
-				// Create each bullet and add it to the group.
+		    for(var i = 0; i < NUMBER_OF_BULLETS; i += 1) {
+		        // Create each bullet and add it to the group.
 
-				var bullet = this.game.add.sprite(0, 0, bitBullet);
-				this.bulletPool.add(bullet);
+		        var bullet = this.game.add.sprite(0, 0, bitBullet);
+		        this.bulletPool.add(bullet);
 
-				// Set its pivot point to the center of the bullet
-				bullet.anchor.setTo(0.5, 0.5);
+		        // Set its pivot point to the center of the bullet
+		        bullet.anchor.setTo(0.5, 0.5);
 
-				// Enable physics on the bullet
-				this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
+		        // Enable physics on the bullet
+		        this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
 
-				// Set its initial state to "dead".
-				bullet.kill();
-			}
+		        // Set its initial state to "dead".
+		        bullet.kill();
+		    }
 		},
 			
 		create: function () {
@@ -277,7 +340,7 @@ var separateTile = function (i, body, tile, slope) {
 CUSTOM TILES
 map.layers[1].data[6][3].intersects
 !tile.intersects(body.position.x, body.position.y, body.right, body.bottom))
-*/
+*/	
 					//console.log(l.name);
 			
 
@@ -296,14 +359,14 @@ map.layers[1].data[6][3].intersects
 
 			
 
-			this.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+		    this.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
 			
-			this.game.time.advancedTiming = true;
-			this.fpsText = this.game.add.text(
-			  20, 20, '', { font: '16px Arial', fill: '#ffffff' }
-			);
-			this.fpsText.fixedToCamera = true;
+    		this.game.time.advancedTiming = true;
+    		this.fpsText = this.game.add.text(
+      		  20, 20, '', { font: '16px Arial', fill: '#ffffff' }
+    		);
+    		this.fpsText.fixedToCamera = true;
 
 			this.game.stage.disableVisibilityChange = true;
 			GameCtrl.remotePlayers=[];
@@ -338,7 +401,7 @@ map.layers[1].data[6][3].intersects
 
 			}, this);
 			
-				
+		        
 			this.realPlayer=this.initPlayer(Math.floor(Math.random()*600) + 100, 8);
 			this.player = this.realPlayer.sprite;
 
@@ -346,7 +409,7 @@ map.layers[1].data[6][3].intersects
 
 			this.createBullets();
 
-						
+			            
 			
 		},
 
@@ -354,17 +417,17 @@ map.layers[1].data[6][3].intersects
 			// Get a dead bullet from the pool
 			var bullet = this.bulletPool.getFirstDead();
 
-			// If there aren't any bullets available then don't shoot
-			if (bullet === null || bullet === undefined) {
-				return;
-			}
+		    // If there aren't any bullets available then don't shoot
+		    if (bullet === null || bullet === undefined) {
+		    	return;
+		    }
 			
 
-			// Revive the bullet
+		    // Revive the bullet
 			// This makes the bullet "alive"
-			bullet.revive();
+		    bullet.revive();
 
-			//bullet.tint=parseInt(data.color,16);
+		    //bullet.tint=parseInt(data.color,16);
 			
 			// Bullets should kill themselves when they leave the world.
 			// Phaser takes care of this for me by setting this flag
@@ -384,29 +447,29 @@ map.layers[1].data[6][3].intersects
 		},
 		update: function () {
 			if (this.game.time.fps !== 0) {
-				this.fpsText.setText(this.game.time.fps + ' FPS');
-			}
+		        this.fpsText.setText(this.game.time.fps + ' FPS');
+    		}
 
-			//this.collideSpriteVsTilemapLayer(object1, object2, collideCallback, processCallback, callbackContext);
-			//this.physics.arcade.collideSpriteVsTilemapLayer(this.player, this.tilesCollision);
+ 			//this.collideSpriteVsTilemapLayer(object1, object2, collideCallback, processCallback, callbackContext);
+ 			//this.physics.arcade.collideSpriteVsTilemapLayer(this.player, this.tilesCollision);
 
-			var testCollide=function (sprite,tilemapLayer){
-				var _mapData = tilemapLayer.getTiles(
-				sprite.body.position.x - sprite.body.tilePadding.x,
-				sprite.body.position.y - sprite.body.tilePadding.y,
-				sprite.body.width + sprite.body.tilePadding.x,
-				sprite.body.height + sprite.body.tilePadding.y,
-				false, false);
+ 			var testCollide=function (sprite,tilemapLayer){
+	 			var _mapData = tilemapLayer.getTiles(
+	            sprite.body.position.x - sprite.body.tilePadding.x,
+	            sprite.body.position.y - sprite.body.tilePadding.y,
+	            sprite.body.width + sprite.body.tilePadding.x,
+	            sprite.body.height + sprite.body.tilePadding.y,
+	            false, false);
 
 				for (var i = 0; i < _mapData.length; i += 1) {
 					separateTile.call(this.physics.arcade, i, sprite.body, _mapData[i], tilemapLayer._slope);
 				}
-			};
+            };
 
 
 			testCollide.call(this, this.player, this.tilesCollision);
 
-			//this.physics.arcade.collide(this.player, this.tilesCollision /*, this.realPlayer.collideWall, null, this.realPlayer*/);
+ 			//this.physics.arcade.collide(this.player, this.tilesCollision /*, this.realPlayer.collideWall, null, this.realPlayer*/);
 
 			this.realPlayer.update();
 
@@ -422,18 +485,18 @@ map.layers[1].data[6][3].intersects
 
 		},
 		render: function(){
-			//this.game.debug.bodyInfo(this.player, 0, 100);
+			this.game.debug.bodyInfo(this.player, 0, 100);
 			//this.game.debug.body(this.player,0,100);
 		}
 	};
 
 
 	function Player(game){
-		this.game = game;
-		this.physics = game.physics;
-		this.add = game.add;
-		this.sprite = null;
-		this.keyboard = this.game.input.keyboard;
+	    this.game = game;
+	    this.physics = game.physics;
+	    this.add = game.add;
+	    this.sprite = null;
+    	this.keyboard = this.game.input.keyboard;
 		
 
 		this.game.input.keyboard.addKeyCapture([
@@ -445,7 +508,7 @@ map.layers[1].data[6][3].intersects
 		this.game.input.gamepad.start();
 		this.pad1 = this.game.input.gamepad.pad1;
 
-		this.canJump = true;
+    	this.canJump = true;
 	}
  
 	Player.prototype = {
@@ -508,9 +571,9 @@ map.layers[1].data[6][3].intersects
 			}
 
 			if(!RIGHT && LEFT){
-				this.go('left');
+				this.go('left', TURBO);
 			}else if (!LEFT && RIGHT){
-				this.go('right');
+				this.go('right', TURBO);
 			}
 
 			var isInAir=(!this.sprite.body.blocked.down && !this.sprite.body.blocked.left && !this.sprite.body.blocked.right);
@@ -545,11 +608,11 @@ map.layers[1].data[6][3].intersects
 			if (!this.sprite.body.blocked.down) {
 				if (this.sprite.body.blocked.left) {
 					//Al saltar desde una pared sale impulsado con la misma o al menos un poco de velocidad
-					this.sprite.body.velocity.x = -this.sprite.body.velocity.x + MAX_SPEED;
+					this.sprite.body.velocity.x = -this.sprite.body.velocity.x + JUMP_BACK_OFF;
 				}
 				if (this.sprite.body.blocked.right) {
 					//Idem anterior
-					this.sprite.body.velocity.x = -this.sprite.body.velocity.x - MAX_SPEED;
+					this.sprite.body.velocity.x = -this.sprite.body.velocity.x - JUMP_BACK_OFF;
 				}
 			}
 			this.sprite.body.velocity.y = -YSPEED;
@@ -559,15 +622,17 @@ map.layers[1].data[6][3].intersects
 			
 		},
 
-		go: function(direction) {
+		go: function(direction, TURBO) {
 			var sign = (direction==='left') ? -1 : 1;
 			
+			var _bonus = (TURBO) ? 1.8 : 1;
+
 			//this.sprite.body.acceleration.x=sign*MOVE_ACCELERATION;
 			if(this.sprite.body.blocked.down){
 				//Si esta en el piso no paga penalidad para empezar a moverse.
-				this.sprite.body.velocity.x=sign*MAX_SPEED+this.sprite.body.speedxPunish;
+				this.sprite.body.velocity.x = sign * MAX_SPEED * _bonus +this.sprite.body.speedxPunish;
 			} else {
-				this.sprite.body.acceleration.x=sign*MOVE_ACCELERATION;
+				this.sprite.body.acceleration.x = sign * MOVE_ACCELERATION * _bonus;
 
 				// hung!
 				if ((this.sprite.body.blocked.left || this.sprite.body.blocked.right) && this.sprite.body.velocity.y > -MAX_SPEED_Y *0.8 ){
