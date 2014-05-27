@@ -27,7 +27,7 @@ GameCtrl.Preloader.prototype = {
 		this.load.setPreloadSprite(this.preloadBar);
 
 		//this.load.tilemap('main', 'assets/demo-mariano.json', null, Phaser.Tilemap.TILED_JSON);
-		this.load.tilemap('main', 'assets/l1.json', null, Phaser.Tilemap.TILED_JSON);
+		this.load.tilemap('main', 'assets/l1.json?v=4', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('kenney32x32', 'assets/images/tiles_spritesheet.png');
         
         this.load.image('background', 'assets/images/bg.jpg');
