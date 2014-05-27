@@ -19,33 +19,33 @@ var PLAYER;
 
 
 function halfRectangleTop(i, body, tile){
-    // check intersection
-    /*var intersects = (body.bottom.right <= tile.worldX);
-    intersects = intersects || (body.bottom <= tile.worldY + (tile.height / 2));
-    intersects = intersects || (body.position.x >= tile.worldX + tile.width);
-    intersects = intersects || (body.position.y >= tile.worldY + (tile.height / 2)); */
-    var intersects = (body.bottom.right <= tile.worldX);
-    intersects = intersects || (body.bottom <= tile.worldY + (tile.height / 2));
-    intersects = intersects || (body.position.x >= tile.worldX + tile.width);
-    intersects = intersects || (body.position.y >= tile.worldY);
-    console.log(intersects);
-    if (!intersects) {
-    	return intersects;
-    }
+	// check intersection
+	/*var intersects = (body.bottom.right <= tile.worldX);
+	intersects = intersects || (body.bottom <= tile.worldY + (tile.height / 2));
+	intersects = intersects || (body.position.x >= tile.worldX + tile.width);
+	intersects = intersects || (body.position.y >= tile.worldY + (tile.height / 2)); */
+	var intersects = (body.bottom.right <= tile.worldX);
+	intersects = intersects || (body.bottom <= tile.worldY + (tile.height / 2));
+	intersects = intersects || (body.position.x >= tile.worldX + tile.width);
+	intersects = intersects || (body.position.y >= tile.worldY);
+	console.log(intersects);
+	if (!intersects) {
+		return intersects;
+	}
 
 
-    this.tileCheckX(body, tile);
-    /*
-    var ox=0;
-    if (!body.blocked.right && body.deltaAbsX() > 0) {
+	this.tileCheckX(body, tile);
+	/*
+	var ox=0;
+	if (!body.blocked.right && body.deltaAbsX() > 0) {
 		ox = body.right - tile.left;
-    } else if (!body.blocked.left && body.deltaAbsX() < 0) {
+	} else if (!body.blocked.left && body.deltaAbsX() < 0) {
 		ox = body.x - tile.right;
-    }
+	}
 
-    if (this.TILE_BIAS < Math.abs(ox)) {
-    	ox=0;
-    }
+	if (this.TILE_BIAS < Math.abs(ox)) {
+		ox=0;
+	}
 	
 	if(ox !== 0){
 		this.processTileSeparationX(body, ox);
@@ -55,11 +55,11 @@ function halfRectangleTop(i, body, tile){
 	
 	if (body.deltaY() < 0 && !body.blocked.up) {
 		//  Body is moving UP
-        if (tile.faceBottom && body.y < tile.bottom) {
+		if (tile.faceBottom && body.y < tile.bottom) {
 			oy = body.y - tile.bottom + (tile.height / 2);
 
-            if (oy < -this.TILE_BIAS) {
-            	oy = 0;
+			if (oy < -this.TILE_BIAS) {
+				oy = 0;
 			}
 		}
 	} else if (body.deltaY() > 0 && !body.blocked.down && tile.collideUp && body.checkCollision.down) {
@@ -68,13 +68,13 @@ function halfRectangleTop(i, body, tile){
 		if (tile.faceTop && body.bottom > tile.top) {
 			oy = body.bottom - tile.top;
 
-            if (oy > this.TILE_BIAS) {
-            	oy = 0;
+			if (oy > this.TILE_BIAS) {
+				oy = 0;
 			}
-        }
-    }
+		}
+	}
 
-    if (oy !== 0) {
+	if (oy !== 0) {
 		this.processTileSeparationY(body, oy);
 	}
 
@@ -156,7 +156,7 @@ var separateTile = function (i, body, tile, slope) {
 			return false;
 		}
 
-        debugger;
+		debugger;
 
 		//  We don't need to go any further if this tile doesn't actually separate
 		if (!tile.faceLeft && !tile.faceRight && !tile.faceTop && !tile.faceBottom)
@@ -214,22 +214,22 @@ var separateTile = function (i, body, tile, slope) {
 			{
 				oy = this.tileCheckY(body, tile);
 
-                //  That's vertical done, check if we still intersects? If not then we can return now
-                if (oy !== 0 && !tile.intersects(body.position.x, body.position.y, body.right, body.bottom))
-                {
-                    return true;
-                }
-            }
+				//  That's vertical done, check if we still intersects? If not then we can return now
+				if (oy !== 0 && !tile.intersects(body.position.x, body.position.y, body.right, body.bottom))
+				{
+					return true;
+				}
+			}
 
-            if (tile.faceLeft || tile.faceRight)
-            {
-                ox = this.tileCheckX(body, tile);
-            }
-        }
+			if (tile.faceLeft || tile.faceRight)
+			{
+				ox = this.tileCheckX(body, tile);
+			}
+		}
 
-        return (ox !== 0 || oy !== 0);
+		return (ox !== 0 || oy !== 0);
 */
-    };
+	};
 
 (function(){
 	GameCtrl.Arena = function () {
@@ -262,7 +262,7 @@ var separateTile = function (i, body, tile, slope) {
 		var letters = '0123456789ABCDEF'.split('');
 		var color = '';
 		for (var i = 0; i < 6; i += 1 ) {
-		    color += letters[Math.floor(Math.random() * 16)];
+			color += letters[Math.floor(Math.random() * 16)];
 		}
 		return color;
 	}
@@ -279,29 +279,29 @@ var separateTile = function (i, body, tile, slope) {
 		},
 		createBullets:function(){
 			// Create an object pool of bullets
-		    this.bulletPool = this.game.add.group();
-		    var bitBullet=this.add.bitmapData(8,8);
-		    bitBullet.ctx.beginPath();
-		    bitBullet.ctx.rect(0,0,8,8);
-		    //bitBullet.ctx.fillStyle = this.player._color;
-		    bitBullet.ctx.fillStyle = '#ffffff';	
-		    bitBullet.ctx.fill();
+			this.bulletPool = this.game.add.group();
+			var bitBullet=this.add.bitmapData(8,8);
+			bitBullet.ctx.beginPath();
+			bitBullet.ctx.rect(0,0,8,8);
+			//bitBullet.ctx.fillStyle = this.player._color;
+			bitBullet.ctx.fillStyle = '#ffffff';	
+			bitBullet.ctx.fill();
 
-		    for(var i = 0; i < NUMBER_OF_BULLETS; i += 1) {
-		        // Create each bullet and add it to the group.
+			for(var i = 0; i < NUMBER_OF_BULLETS; i += 1) {
+				// Create each bullet and add it to the group.
 
-		        var bullet = this.game.add.sprite(0, 0, bitBullet);
-		        this.bulletPool.add(bullet);
+				var bullet = this.game.add.sprite(0, 0, bitBullet);
+				this.bulletPool.add(bullet);
 
-		        // Set its pivot point to the center of the bullet
-		        bullet.anchor.setTo(0.5, 0.5);
+				// Set its pivot point to the center of the bullet
+				bullet.anchor.setTo(0.5, 0.5);
 
-		        // Enable physics on the bullet
-		        this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
+				// Enable physics on the bullet
+				this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
 
-		        // Set its initial state to "dead".
-		        bullet.kill();
-		    }
+				// Set its initial state to "dead".
+				bullet.kill();
+			}
 		},
 			
 		create: function () {
@@ -359,14 +359,14 @@ map.layers[1].data[6][3].intersects
 
 			
 
-		    this.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+			this.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
 			
-    		this.game.time.advancedTiming = true;
-    		this.fpsText = this.game.add.text(
-      		  20, 20, '', { font: '16px Arial', fill: '#ffffff' }
-    		);
-    		this.fpsText.fixedToCamera = true;
+			this.game.time.advancedTiming = true;
+			this.fpsText = this.game.add.text(
+			  20, 20, '', { font: '16px Arial', fill: '#ffffff' }
+			);
+			this.fpsText.fixedToCamera = true;
 
 			this.game.stage.disableVisibilityChange = true;
 			GameCtrl.remotePlayers=[];
@@ -401,7 +401,7 @@ map.layers[1].data[6][3].intersects
 
 			}, this);
 			
-		        
+				
 			this.realPlayer=this.initPlayer(Math.floor(Math.random()*600) + 100, 8);
 			this.player = this.realPlayer.sprite;
 
@@ -409,7 +409,7 @@ map.layers[1].data[6][3].intersects
 
 			this.createBullets();
 
-			            
+						
 			
 		},
 
@@ -417,17 +417,17 @@ map.layers[1].data[6][3].intersects
 			// Get a dead bullet from the pool
 			var bullet = this.bulletPool.getFirstDead();
 
-		    // If there aren't any bullets available then don't shoot
-		    if (bullet === null || bullet === undefined) {
-		    	return;
-		    }
+			// If there aren't any bullets available then don't shoot
+			if (bullet === null || bullet === undefined) {
+				return;
+			}
 			
 
-		    // Revive the bullet
+			// Revive the bullet
 			// This makes the bullet "alive"
-		    bullet.revive();
+			bullet.revive();
 
-		    //bullet.tint=parseInt(data.color,16);
+			//bullet.tint=parseInt(data.color,16);
 			
 			// Bullets should kill themselves when they leave the world.
 			// Phaser takes care of this for me by setting this flag
@@ -447,29 +447,51 @@ map.layers[1].data[6][3].intersects
 		},
 		update: function () {
 			if (this.game.time.fps !== 0) {
-		        this.fpsText.setText(this.game.time.fps + ' FPS');
-    		}
+				this.fpsText.setText(this.game.time.fps + ' FPS');
+			}
 
- 			//this.collideSpriteVsTilemapLayer(object1, object2, collideCallback, processCallback, callbackContext);
- 			//this.physics.arcade.collideSpriteVsTilemapLayer(this.player, this.tilesCollision);
+			//this.collideSpriteVsTilemapLayer(object1, object2, collideCallback, processCallback, callbackContext);
+			//this.physics.arcade.collideSpriteVsTilemapLayer(this.player, this.tilesCollision);
 
- 			var testCollide=function (sprite,tilemapLayer){
-	 			var _mapData = tilemapLayer.getTiles(
-	            sprite.body.position.x - sprite.body.tilePadding.x,
-	            sprite.body.position.y - sprite.body.tilePadding.y,
-	            sprite.body.width + sprite.body.tilePadding.x,
-	            sprite.body.height + sprite.body.tilePadding.y,
-	            false, false);
+			var testCollide=function (sprite, tilemapLayer){
+				var _mapData = tilemapLayer.getTiles(
+				sprite.body.position.x - sprite.body.tilePadding.x,
+				sprite.body.position.y - sprite.body.tilePadding.y,
+				sprite.body.width + sprite.body.tilePadding.x,
+				sprite.body.height + sprite.body.tilePadding.y,
+				false, false);
 
 				for (var i = 0; i < _mapData.length; i += 1) {
 					separateTile.call(this.physics.arcade, i, sprite.body, _mapData[i], tilemapLayer._slope);
 				}
-            };
-
+			};
 
 			testCollide.call(this, this.player, this.tilesCollision);
 
- 			//this.physics.arcade.collide(this.player, this.tilesCollision /*, this.realPlayer.collideWall, null, this.realPlayer*/);
+
+			var _mapData = this.tilesCollision.getTiles(
+				this.player.body.position.x - this.player.body.tilePadding.x,
+				this.player.body.position.y ,
+				this.player.body.width + this.player.body.tilePadding.x,
+				this.player.body.height/2,
+				false, false);
+
+
+			for (var i = 0; i < _mapData.length; i += 1) {
+				var t =_mapData[i];
+				// solo con el cuadrado se "cuelga"
+				if (this.tilesCollision._slope.hasOwnProperty(t.index) && this.tilesCollision._slope[t.index] === 1) {
+					if(t.worldX + t.width > this.player.x && t.worldY < this.player.y + this.player.height &&  t.worldY > this.player.y ){
+						this.player.body.gravity.set(0, GRAVITY/10);
+					}else{
+						this.player.body.gravity.set(0, GRAVITY);
+					}
+				}
+			}
+
+
+
+			//this.physics.arcade.collide(this.player, this.tilesCollision /*, this.realPlayer.collideWall, null, this.realPlayer*/);
 
 			this.realPlayer.update();
 
@@ -492,11 +514,11 @@ map.layers[1].data[6][3].intersects
 
 
 	function Player(game){
-	    this.game = game;
-	    this.physics = game.physics;
-	    this.add = game.add;
-	    this.sprite = null;
-    	this.keyboard = this.game.input.keyboard;
+		this.game = game;
+		this.physics = game.physics;
+		this.add = game.add;
+		this.sprite = null;
+		this.keyboard = this.game.input.keyboard;
 		
 
 		this.game.input.keyboard.addKeyCapture([
@@ -508,7 +530,7 @@ map.layers[1].data[6][3].intersects
 		this.game.input.gamepad.start();
 		this.pad1 = this.game.input.gamepad.pad1;
 
-    	this.canJump = true;
+		this.canJump = true;
 	}
  
 	Player.prototype = {
