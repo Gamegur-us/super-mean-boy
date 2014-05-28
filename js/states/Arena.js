@@ -137,11 +137,12 @@ var separateTile = function (i, body, tile, slope) {
 		}
 
 
-	if(type===15){
+	if (type === 15) {
 		return halfTriangleBottomLeft.call(this, i, body, tile);
-	}else if(type===17){
+	}else if ( type=== 17) {
 		return halfTriangleBottomRight.call(this, i, body, tile);
-	}else if(type===6){
+	}else if (type === 6) {
+		body.speedxPunish = 0;
 		return halfRectangleTop.call(this, i, body, tile);
 	}
 
@@ -455,10 +456,10 @@ map.layers[1].data[6][3].intersects
 
 			var testCollide=function (sprite, tilemapLayer){
 				var _mapData = tilemapLayer.getTiles(
-				sprite.body.position.x - sprite.body.tilePadding.x,
-				sprite.body.position.y - sprite.body.tilePadding.y,
-				sprite.body.width + sprite.body.tilePadding.x,
-				sprite.body.height + sprite.body.tilePadding.y,
+				sprite.body.position.x - sprite.body.width,
+				sprite.body.position.y,
+				sprite.body.width *3,
+				sprite.body.height,
 				false, false);
 
 				for (var i = 0; i < _mapData.length; i += 1) {
@@ -469,22 +470,34 @@ map.layers[1].data[6][3].intersects
 			testCollide.call(this, this.player, this.tilesCollision);
 
 
-			var _mapData = this.tilesCollision.getTiles(
-				this.player.body.position.x - this.player.body.tilePadding.x,
-				this.player.body.position.y ,
-				this.player.body.width + this.player.body.tilePadding.x,
-				this.player.body.height/2,
-				false, false);
 
+			this.player.body.gravity.set(0, GRAVITY);
+			
+			if(this.player.body.deltaY() > 0){
+				var _mapData = this.tilesCollision.getTiles(
+					this.player.body.position.x - this.player.body.tilePadding.x,
+					this.player.body.position.y ,
+					this.player.body.width + this.player.body.tilePadding.x,
+					this.player.body.height,
+					false, false);
 
-			for (var i = 0; i < _mapData.length; i += 1) {
-				var t =_mapData[i];
-				// solo con el cuadrado se "cuelga"
-				if (this.tilesCollision._slope.hasOwnProperty(t.index) && this.tilesCollision._slope[t.index] === 1) {
-					if(t.worldX + t.width > this.player.x && t.worldY < this.player.y + this.player.height &&  t.worldY > this.player.y ){
-						this.player.body.gravity.set(0, GRAVITY/10);
-					}else{
-						this.player.body.gravity.set(0, GRAVITY);
+				
+				for (var i = 0; i < _mapData.length; i += 1) {
+					var t = _mapData[i];
+					// solo con el cuadrado se "cuelga"
+					if (this.tilesCollision._slope.hasOwnProperty(t.index) && this.tilesCollision._slope[t.index] === 1) {
+						
+					
+						if( this.player.x - (t.worldX + t.width)< 10 /* && 
+							t.worldY < this.player.y + this.player.height &&  t.worldY > this.player.y*/ ) {
+							this.player.body.gravity.set(0, GRAVITY/10);
+							break;
+						} else if( this.player.world.x + this.player.width - t.right < 10  
+							/*t.worldY < this.player.y + this.player.height &&  t.worldY > this.player.y */){
+								this.player.body.gravity.set(0, GRAVITY/10);
+								console.log(this.player.world.x + this.player.width - t.right);
+								break;
+						}
 					}
 				}
 			}
@@ -659,7 +672,7 @@ map.layers[1].data[6][3].intersects
 				// hung!
 				if ((this.sprite.body.blocked.left || this.sprite.body.blocked.right) && this.sprite.body.velocity.y > -MAX_SPEED_Y *0.8 ){
 
-					this.sprite.body.velocity.y=0;
+					//this.sprite.body.velocity.y=0;
 				}
 			}
 
