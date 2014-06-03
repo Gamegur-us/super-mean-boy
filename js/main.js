@@ -1,4 +1,5 @@
 'use strict';
+
 /* global GameCtrl */
 //        Create your Phaser game and inject it into the game div.
 //        We did it in a window.onload event, but you can do it anywhere (requireJS load, anonymous function, jQuery dom ready, - whatever floats your boat)
