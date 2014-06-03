@@ -57,7 +57,7 @@ var PLAYER;
 	GameCtrl.Arena.prototype = {
 		// 150,120
 		initPlayer:function(x,y,color){
-			var player = new Player(this.game);
+			var player = new Player(this.game, this.tilesCollision);
 
 			PLAYER=player;
 			
@@ -114,6 +114,10 @@ var PLAYER;
 
 		            l.data.forEach(function(e){
 		                e.forEach(function(t){
+		                	if (t.index >-1) {
+		                		t.slopeIndex = t.index - firstgid;
+		                	}
+
 		                    if (t.index < 0) {
 		                        // none
 		                    } else if (t.index - firstgid === 1) {
@@ -259,8 +263,9 @@ var PLAYER;
 	};
 
 
-	function Player(game){
+	function Player(game, tilesCollision){
 		this.game = game;
+		this.tilesCollision = tilesCollision;
 		this.physics = game.physics;
 		this.add = game.add;
 		this.sprite = null;
@@ -385,17 +390,18 @@ var PLAYER;
 				for (var i = 0; i < _mapData.length; i += 1) {
 					var t = _mapData[i];
 					// solo con el cuadrado se "cuelga"
-					if (this.tilesCollision._slope.hasOwnProperty(t.index) && this.tilesCollision._slope[t.index] === 1) {
-						
-					
-						if( this.player.x - (t.worldX + t.width)< 10 /* && 
-							t.worldY < this.player.y + this.player.height &&  t.worldY > this.player.y*/ ) {
+					//if (t.hasOwnProperty('slopeIndex')) console.log(t.slopeIndex)
+					if (t.hasOwnProperty('slopeIndex') && t.slopeIndex === 1) {
+											
+						if( this.sprite.x - (t.worldX + t.width)< 10 /* && 
+							t.worldY < this.sprite.y + this.sprite.height &&  t.worldY > this.sprite.y*/ ) {
 							body.gravity.set(0, GRAVITY/10);
+						
 							break;
-						} else if( this.player.world.x + this.player.width - t.right < 10  
-							/*t.worldY < this.player.y + this.player.height &&  t.worldY > this.player.y */){
-								this.player.body.gravity.set(0, GRAVITY/10);
-								console.log(this.player.world.x + this.player.width - t.right);
+						} else if( this.sprite.world.x + this.sprite.width - t.right < 10  
+							/*t.worldY < this.sprite.y + this.sprite.height &&  t.worldY > this.sprite.y */){
+								this.sprite.body.gravity.set(0, GRAVITY/10);
+								console.log(this.sprite.world.x + this.sprite.width - t.right);
 								break;
 						}
 					}
