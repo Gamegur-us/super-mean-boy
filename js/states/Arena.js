@@ -126,6 +126,10 @@ var PLAYER;
 		                        t.slope = 'HALF_TRIANGLE_BOTTOM_LEFT';
 		                    } else if (t.index - firstgid === 17) {
 		                        t.slope = 'HALF_TRIANGLE_BOTTOM_RIGHT';
+		                    }else  if (t.index - firstgid === 8) {
+		                    	t.slope = 'RECTANGLE_BOTTOM';
+		                    }else{
+		                    	console.log(t.index - firstgid);
 		                    }
 		                    // you could also add custom collide function;
 		                    // t.slopeFunction = function (i, body, tile) { custom code }

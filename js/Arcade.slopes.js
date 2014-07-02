@@ -129,9 +129,7 @@
 			this.processTileSeparationY(body, oy);
 		}
 
-	}
-
-
+	};
 
 
 	Phaser.Physics.Arcade._collisionHalfTriangleBottomLeft = function (i, body, tile) {
@@ -155,10 +153,47 @@
 		return true;
 	};
 
+	Phaser.Physics.Arcade._collisionRectangleBottom = function (i, body, tile) {
+		var intersects = (body.position.x >= tile.worldX && body.position.x <=  tile.worldX + tile.width);
+		
+		if (intersects){
+			// falling
+			if(body.velocity.y > 0 && (body.bottom >= tile.worldY + tile.height / 2)){
+				body.position.y = tile.worldY - tile.height / 2;
+				body.blocked.down = true;
+			} else {
+				body.position.y = tile.worldY + tile.height;
+				body.velocity.y=0;
+			}
+		}
+	}
+	
+
+	Phaser.Physics.Arcade._collisionSquareBottomLeft = function (i, body, tile) {
+		var intersects = (body.position.x + body.halfWidth >= tile.worldX && body.position.x <=  tile.worldX + tile.width);
+		
+		if (intersects){
+			// falling
+			if(body.velocity.y > 0 && (body.bottom >= tile.worldY + tile.height / 2)){
+				body.position.y = tile.worldY - tile.height / 2;
+				body.blocked.down = true;
+			} else {
+				body.position.y = tile.worldY + tile.height;
+				body.velocity.y=0;
+			}
+		}
+	}
+	
+
 	Phaser.Physics.Arcade.SLOPEMAP = {
+		// id: 1
 		'FULL_SQUARE': Phaser.Physics.Arcade._collisionFullSquare,
+		// id: 15
 		'HALF_TRIANGLE_BOTTOM_LEFT': Phaser.Physics.Arcade._collisionHalfTriangleBottomLeft,
-		'HALF_TRIANGLE_BOTTOM_RIGHT': Phaser.Physics.Arcade._collisionHalfTriangleBottomRight
+		// id: 17
+		'HALF_TRIANGLE_BOTTOM_RIGHT': Phaser.Physics.Arcade._collisionHalfTriangleBottomRight,
+		// id: 8
+		'RECTANGLE_BOTTOM': Phaser.Physics.Arcade._collisionRectangleBottom,
 	};
 
 
